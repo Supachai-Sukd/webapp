@@ -1,0 +1,23 @@
+.banner{
+    margin-bottom: 20px
+}
+.banner img{
+    width: 100%;
+}
+.thumbnail{
+    padding: 0;
+}
+.thumbnail img{
+    width: 100%
+}
+.caption{
+    height: 130px;
+    overflow:hidden;
+}
+.caption h4{
+    white-space: nowrap;
+}
+.detail{
+    padding: 10px;
+    color: blueviolet;
+}

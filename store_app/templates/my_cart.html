@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block page %}
+    <div class="row">
+        <div class="col-md-12">
+        <h3>ตะกร้าสินค้า</h3>
+        </div>
+        <div class="col-md-8">
+            
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>รายละเอียดสินค้า</th>
+                        <th>ราคา</th>
+                        <th>จำนวน</th>
+                        <th>รวม</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_detail in order.order_details.all %}
+                    <tr>
+                        <td scope="row">{{ forloop.counter }} </td>
+                        <td><a href="{% url 'product_detail' order_detail.product.id %}">
+                            <img src="{{MEDIA_URL}}{{ order_detail.product.photo}}" class="img-rounded" width="50"/></a>
+                            {{ order_detatil.product.name}}<hr/>
+                            <small class="text=muted"> {{ order_detatil.product.detail }}</small>
+
+                        </td>
+                        <td>{{ order_detail.product.price }}</td>
+                        <td>{{ order_detail.quantity }}</td>
+                        <td>{{ order_detail.sub_total }}</td>
+                        <td><a href="{% url 'delete_order_detail' order_detail.id %}" class="btn btn-danger">ลบ</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <div class="thumbnail">
+                <div class="detail">
+                    <h4>ที่อยู่ในการจัดส่งสินค้า</h4>
+                    <textarea rows="3" class="form-control"></textarea>
+                    <h4>ยอดรวม {{ order.total }}</h4>
+                    <a href="#" class="btn btn-success">ชำระเงิน</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

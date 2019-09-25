@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block page %}
+    <div class="row">
+        <!--Product detail section-->
+        <div class="col-md-8">
+            <div class="thumbnail">
+                <img src="{{ MEDIA_URL }}{{ product.photo }}" alt="">
+                <div class="detail">
+                    <h4 class="pull-right">{{ product.price }}</h4>
+                    <h4>{{product.name}}</h4>
+                    <p>{{ product.detail}}</p>
+                </div>
+            </div>
+        </div>
+            <!--Add to cart and purchase section-->
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <div class="detail">
+                    <!--ตรงนี้จะเป็นคำสั่งเช็คว่า user login เข้ามาหรือเปล่า-->
+                    {% if user and not user.is_anonymous %}
+                        <h4>เพิ่มสินค้าลงตะกร้าหรือสั่งซื้อ</h4>
+                        <form method="POST">
+                            <!--การใช้ method post เราจะต้องเพิ่ม tag ด้านล่างนี้เพื่อตรวจสอบค่าจาก form
+                            ที่ส่งเข้ามาเป็นค่าที่ถูกต้องหรือเปล่า hack ระบบหรือเปล่า
+                            เราจะต้องใส่ csrf_token ทุกครั้งที่มีการใช้ method POST-->
+                            {% csrf_token %}
+                        <div class="form-group">
+                            <label for="quantity">จำนวนสั่งซื้อ</label>
+                            <select class="form-control" name="quantity" id="quantity">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success">เพิ่มสินค้าลงตะกร้า</button>
+                        
+                        </form>
+                    {% else %}
+                    <h4>กรุณาเข้าสู่ระบบเพื่อทำการสั่งซื้อ</h4>
+                    <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}" 
+                    class="btn btn-primary">Login with facebook</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+    </div>
+ {% endblock %}
